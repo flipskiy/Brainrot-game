@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>BRAINROT LEGENDS</title>
+    <title>BRAINROT LEGENDS ⚡</title>
     <!-- Telegram Web App -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
@@ -11,12 +11,12 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', system-ui, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             user-select: none;
         }
 
         body {
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a0a 100%);
+            background: linear-gradient(135deg, #2b1b3a 0%, #1a2f4a 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -27,12 +27,13 @@
         #app {
             width: 100%;
             max-width: 420px;
-            background: rgba(10, 8, 5, 0.98);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             border-radius: 40px;
-            box-shadow: 0 30px 80px rgba(196, 167, 71, 0.3);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
             overflow: hidden;
-            border: 2px solid #ffd700;
-            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         /* Музыка */
@@ -42,8 +43,8 @@
             right: 15px;
             width: 45px;
             height: 45px;
-            background: #2a2418;
-            border: 2px solid #ffd700;
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -51,30 +52,31 @@
             font-size: 24px;
             cursor: pointer;
             z-index: 100;
-            color: gold;
-            box-shadow: 0 0 20px gold;
+            color: white;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
         }
 
         /* Шапка */
         .header {
-            background: linear-gradient(135deg, #8b7355 0%, #5d4c33 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             padding: 20px;
-            color: #ffd700;
+            color: white;
             text-align: center;
-            border-bottom: 3px solid gold;
-            position: relative;
-            z-index: 1;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .header h1 {
-            font-size: 24px;
+            font-size: 28px;
             margin-bottom: 10px;
-            text-shadow: 2px 2px 0 #000;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
 
         .balance {
-            font-size: 40px;
-            font-weight: bold;
+            font-size: 42px;
+            font-weight: 800;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -85,49 +87,50 @@
             width: 50px;
             height: 50px;
             background: url('https://cdn-icons-png.flaticon.com/512/3135/3135769.png') center/contain no-repeat;
-            filter: drop-shadow(0 0 15px gold);
+            filter: drop-shadow(0 0 20px gold);
         }
 
         /* Престиж */
         .prestige-bar {
-            background: linear-gradient(90deg, #4a2a2a, #8b4a4a);
-            padding: 8px;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            padding: 12px;
             text-align: center;
-            color: gold;
+            color: white;
             font-weight: bold;
             cursor: pointer;
-            border-bottom: 2px solid gold;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: 16px;
         }
 
         .prestige-bar:hover {
-            background: #6a3a3a;
+            opacity: 0.9;
         }
 
         /* Статистика */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            background: #1e1a12;
+            background: rgba(0, 0, 0, 0.3);
             padding: 15px 5px;
-            color: gold;
+            color: white;
             font-size: 12px;
             text-align: center;
-            border-bottom: 1px solid gold;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .stat-value {
-            font-weight: bold;
+            font-weight: 800;
             color: #ffd700;
-            font-size: 16px;
+            font-size: 18px;
             margin-top: 5px;
         }
 
         /* Табы */
         .tabs {
             display: flex;
-            background: #1a140e;
-            padding: 5px 5px 0;
-            gap: 3px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 8px 8px 0;
+            gap: 4px;
         }
 
         .tab {
@@ -135,24 +138,27 @@
             padding: 12px 0;
             text-align: center;
             cursor: pointer;
-            color: gold;
-            font-weight: bold;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 600;
             font-size: 13px;
             border-radius: 20px 20px 0 0;
-            background: #2a2418;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            transition: all 0.3s;
         }
 
         .tab.active {
-            background: linear-gradient(135deg, #b89b5c 0%, #8b7355 100%);
-            color: #000;
-            box-shadow: 0 -5px 20px gold;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 -5px 20px rgba(102, 126, 234, 0.5);
         }
 
         /* Кликер */
         .clicker-section {
             padding: 25px;
             text-align: center;
-            background: #1e1a12;
+            background: rgba(0, 0, 0, 0.2);
         }
 
         #clickButton {
@@ -161,56 +167,76 @@
             margin: 0 auto 20px;
             cursor: pointer;
             border-radius: 50%;
-            border: 5px solid gold;
-            box-shadow: 0 0 50px gold;
+            border: 4px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 0 50px rgba(102, 126, 234, 0.5);
             background-image: url('https://static.wikia.nocookie.net/ukradite-breinrot/images/6/66/67.webp/revision/latest?cb=20250918173131&path-prefix=ru');
             background-size: cover;
             background-position: center;
-            transition: 0.1s;
+            transition: transform 0.1s;
         }
 
         #clickButton:active {
-            transform: scale(0.92);
+            transform: scale(0.95);
+        }
+
+        .click-info {
+            color: white;
+            font-size: 18px;
+        }
+
+        #clickPower {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ffd700;
         }
 
         /* Прогресс */
         .progress-container {
             padding: 15px 20px;
-            background: #1e1a12;
+            background: rgba(0, 0, 0, 0.2);
         }
 
         .progress-bar {
             width: 100%;
             height: 15px;
-            background: #2a2418;
+            background: rgba(0, 0, 0, 0.3);
             border-radius: 20px;
             overflow: hidden;
-            border: 1px solid gold;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, gold, #ffaa00);
+            background: linear-gradient(90deg, #667eea, #764ba2);
             width: 0%;
-            transition: 0.3s;
+            transition: width 0.3s;
+        }
+
+        .level-info {
+            display: flex;
+            justify-content: space-between;
+            color: white;
+            font-size: 14px;
+            margin-top: 5px;
         }
 
         /* Ежедневная награда */
         .daily-reward {
-            background: linear-gradient(90deg, #2a4a2a, #1a3a1a);
+            background: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%);
             padding: 15px;
             margin: 10px;
             border-radius: 20px;
-            border: 2px solid gold;
+            border: 1px solid rgba(255, 255, 255, 0.3);
             cursor: pointer;
             text-align: center;
-            color: gold;
+            color: white;
+            font-weight: bold;
         }
 
         /* Секции */
         .section {
             padding: 20px;
-            background: #1e1a12;
+            background: rgba(0, 0, 0, 0.2);
             max-height: 450px;
             overflow-y: auto;
             display: none;
@@ -221,20 +247,23 @@
         }
 
         .section-title {
-            font-size: 20px;
-            color: gold;
+            font-size: 22px;
+            color: white;
             margin-bottom: 15px;
-            border-bottom: 1px solid gold;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
             padding-bottom: 8px;
+            font-weight: 700;
         }
 
         /* Карточки */
         .item-card {
-            background: #2a2418;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border-radius: 20px;
             padding: 15px;
             margin-bottom: 12px;
-            border: 1px solid gold;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .item-header {
@@ -247,13 +276,13 @@
         .item-icon {
             width: 60px;
             height: 60px;
-            background: #3a2e1e;
+            background: rgba(255, 255, 255, 0.2);
             border-radius: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 35px;
-            border: 1px solid gold;
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
         .item-info {
@@ -262,13 +291,13 @@
 
         .item-name {
             font-weight: bold;
-            color: gold;
+            color: white;
             font-size: 16px;
         }
 
         .item-desc {
             font-size: 12px;
-            color: #c4a747;
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .item-footer {
@@ -278,19 +307,21 @@
         }
 
         .item-price {
-            color: #ffaa33;
+            color: #ffd700;
             font-weight: bold;
             font-size: 18px;
         }
 
         .buy-btn {
-            background: linear-gradient(135deg, #5d4c33 0%, #3a2e1e 100%);
-            color: gold;
-            border: 1px solid gold;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
             padding: 10px 25px;
             border-radius: 30px;
             font-weight: bold;
             cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: 14px;
         }
 
         .buy-btn:disabled {
@@ -299,10 +330,11 @@
         }
 
         .owned-badge {
-            background: #4a6b3a;
-            color: gold;
+            background: linear-gradient(135deg, #00b09b, #96c93d);
+            color: white;
             padding: 8px 20px;
             border-radius: 30px;
+            font-size: 14px;
         }
 
         /* Ачивки */
@@ -313,20 +345,22 @@
         }
 
         .achievement-card {
-            background: #2a2418;
-            border: 1px solid gold;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 15px;
             padding: 12px;
             text-align: center;
         }
 
         .achievement-card.done {
-            background: #4a6b3a;
+            background: linear-gradient(135deg, #00b09b, #96c93d);
         }
 
         /* Ивент */
         .event-banner {
-            background: linear-gradient(90deg, #aa44ff, #6622cc);
+            background: linear-gradient(135deg, #ff6b6b, #feca57);
             padding: 10px;
             text-align: center;
             color: white;
@@ -336,7 +370,7 @@
 
         @keyframes pulse {
             0% { opacity: 1; }
-            50% { opacity: 0.7; }
+            50% { opacity: 0.8; }
         }
 
         /* Уведомления */
@@ -347,24 +381,23 @@
             transform: translateX(-50%) translateY(100px);
             padding: 15px 25px;
             border-radius: 50px;
-            color: #000;
+            color: white;
             font-weight: bold;
             z-index: 1000;
             transition: 0.3s;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
 
         .notification.show {
             transform: translateX(-50%) translateY(0);
         }
 
-        .notification.success {
-            background: linear-gradient(135deg, gold, #ffaa00);
-            border: 2px solid #fff;
-        }
-
-        .notification.event {
-            background: linear-gradient(135deg, #aa44ff, #6622cc);
-            color: white;
+        /* Анимация монетки */
+        @keyframes floatUp {
+            0% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: translateY(-150px) scale(2); }
         }
     </style>
 </head>
@@ -378,7 +411,7 @@
 
         <!-- Шапка -->
         <div class="header">
-            <h1>🧠 BRAINROT LEGENDS</h1>
+            <h1>BRAINROT LEGENDS ⚡</h1>
             <div class="balance">
                 <span id="balance">0</span>
                 <div class="coin-icon"></div>
@@ -386,7 +419,7 @@
         </div>
 
         <!-- Престиж -->
-        <div class="prestige-bar" onclick="doPrestige()" id="prestigeBar">
+        <div class="prestige-bar" onclick="doPrestige()">
             ✨ ПРЕСТИЖ <span id="prestigeLevel">0</span> ✨ Множитель x<span id="prestigeMult">1.0</span>
         </div>
 
@@ -410,8 +443,8 @@
         <!-- Кликер -->
         <div id="clickerSection" class="clicker-section">
             <div id="clickButton"></div>
-            <div class="click-info" style="color:gold; font-size:20px;">
-                Сила: <span id="clickPower">1</span>
+            <div class="click-info">
+                Сила клика: <span id="clickPower">1</span>
             </div>
         </div>
 
@@ -420,14 +453,14 @@
             <div class="progress-bar">
                 <div class="progress-fill" id="levelProgress"></div>
             </div>
-            <div style="display:flex; justify-content:space-between; color:gold; margin-top:5px;">
+            <div class="level-info">
                 <span id="currentLevel">Уровень 1</span>
                 <span id="nextLevelExp">До 2: 100</span>
             </div>
         </div>
 
         <!-- Ежедневная награда -->
-        <div class="daily-reward" onclick="claimDaily()" id="dailyReward">
+        <div class="daily-reward" onclick="claimDaily()">
             🔥 ЕЖЕДНЕВНАЯ НАГРАДА 🔥<br>
             <span id="dailyInfo">Заберите +100 монет!</span>
         </div>
@@ -464,16 +497,6 @@
         const tg = window.Telegram.WebApp;
         tg.ready();
         tg.expand();
-        tg.enableClosingConfirmation(); // Спросит при выходе
-
-        // Показываем имя пользователя
-        let username = 'Игрок';
-        if (tg.initDataUnsafe?.user) {
-            username = tg.initDataUnsafe.user.first_name || 'Игрок';
-            if (tg.initDataUnsafe.user.last_name) {
-                username += ' ' + tg.initDataUnsafe.user.last_name;
-            }
-        }
 
         // ========== МУЗЫКА ==========
         const music = document.getElementById('bgMusic');
@@ -486,16 +509,15 @@
                 musicBtn.textContent = '🔇';
             } else {
                 music.play().catch(() => {
-                    showNotification('🎵 Нажми на экран для музыки', 'event');
+                    showNotification('🎵 Нажми на экран для музыки');
                 });
                 musicBtn.textContent = '🔊';
             }
             musicPlaying = !musicPlaying;
         };
 
-        // ========== МЕГА-СОХРАНЕНИЕ ==========
+        // ========== ИГРОВЫЕ ДАННЫЕ ==========
         let gameState = {
-            username: username,
             balance: 100,
             clickPower: 1,
             totalClicks: 0,
@@ -506,8 +528,7 @@
             
             prestige: {
                 level: 0,
-                multiplier: 1.0,
-                points: 0
+                multiplier: 1.0
             },
             
             daily: {
@@ -548,7 +569,7 @@
             eventEndTime: 0
         };
 
-        // ========== DOM ==========
+        // ========== DOM ЭЛЕМЕНТЫ ==========
         const balanceEl = document.getElementById('balance');
         const clickPowerEl = document.getElementById('clickPower');
         const levelEl = document.getElementById('level');
@@ -569,15 +590,14 @@
         const achievementsListEl = document.getElementById('achievementsList');
         const skinsListEl = document.getElementById('skinsList');
 
-        // ========== УВЕДОМЛЕНИЯ ==========
-        function showNotification(msg, type = 'success') {
+        // ========== ФУНКЦИИ ==========
+        function showNotification(msg) {
             const notif = document.getElementById('notification');
             notif.textContent = msg;
-            notif.className = `notification ${type} show`;
+            notif.classList.add('show');
             setTimeout(() => notif.classList.remove('show'), 3000);
         }
 
-        // ========== МОНЕТКА ПРИ КЛИКЕ ==========
         function createFloatingCoin(x, y) {
             const coin = document.createElement('div');
             coin.className = 'coin-icon';
@@ -591,36 +611,8 @@
             setTimeout(() => coin.remove(), 1000);
         }
 
-        // ========== ПАССИВНЫЙ ДОХОД ==========
         function getPassiveIncome() {
             let total = 0;
             gameState.businesses.forEach(b => total += b.income * b.count);
             total *= gameState.prestige.multiplier;
-            const skin = gameState.skins.find(s => s.id === gameState.currentSkin);
-            total *= skin?.bonus || 1;
-            return Math.floor(total);
-        }
-
-        // ========== ОПЫТ ==========
-        function addExp(amount) {
-            gameState.exp += amount * gameState.prestige.multiplier;
-            
-            while (gameState.exp >= gameState.expToNext) {
-                gameState.level++;
-                gameState.exp -= gameState.expToNext;
-                gameState.expToNext = Math.floor(gameState.expToNext * 1.5);
-                showNotification(`🎉 УРОВЕНЬ ${gameState.level}!`, 'event');
-                checkAchievements();
-                
-                // Отправляем в Telegram
-                tg.HapticFeedback.notification('success'); // Вибрация
-            }
-        }
-
-        // ========== ПРОВЕРКА АЧИВОК ==========
-        function checkAchievements() {
-            gameState.achievements.forEach(a => {
-                if (!a.done) {
-                    let completed = false;
-                    
-                    if (a.id === 'a1' && gameState.to
+            const skin = gameState.skins.find(s => s.id === gameState.curr
