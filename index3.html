@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>BRAINROT ANDROID</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent; /* Убирает серый фон при нажатии на Android */
+        }
+
+        body {
+            background: #0a0a0a;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            font-family: Arial, sans-serif;
+        }
+
+        #app {
+            width: 100%;
+            max-width: 450px;
+            background: #111;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Все кнопки с большими областями нажатия */
+        button, .clickable, .tab, .prestige-bar, .daily-reward, .item-card {
+            cursor: pointer;
+            touch-action: manipulation; /* Важно для Android */
+            -webkit-touch-callout: none;
+        }
+
+        .header {
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 20px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .header h1 {
+            color: #ffd700;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .balance {
+            font-size: 42px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .coin-icon {
+            width: 50px;
+            height: 50px;
+            background: url('https://cdn-icons-png.flaticon.com/512/3135/3135769.png') center/contain no-repeat;
+        }
+
+        .prestige-bar {
+            background: #2a2a2a;
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            text-align: center;
+            color: #ffd700;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .stat-item {
+            background: #1a1a1a;
+            padding: 10px;
+            border-radius: 10px;
+            text-align: center;
+            color: #999;
+            font-size: 12px;
+        }
+
+        .stat-value {
+            color: #ffd700;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+
+        .tab {
+            flex: 1;
+            background: #1a1a1a;
+            padding: 12px 0;
+            text-align: center;
+            border-radius: 10px;
+            color: #999;
+            font-weight: bold;
+        }
+
+        .tab.active {
+            background: #ffd700;
+            color: #000;
+        }
+
+        .clicker-section {
+            background: #1a1a1a;
+            padding: 25px;
+            border-radius: 20px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        #clickButton {
+            width: 220px;
+            height: 220px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            border: 3px solid #ffd700;
+            background-image: url('https://static.wikia.nocookie.net/ukradite-breinrot/images/6/66/67.webp/revision/latest?cb=20250918173131&path-prefix=ru');
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.1s;
+        }
+
+        #clickButton:active {
+            transform: scale(0.95);
+        }
+
+        .click-info {
+            color: white;
+            font-size: 18px;
+        }
+
+        #clickPower {
+            color: #ffd700;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .progress-container {
+            background: #1a1a1a;
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background: #2a2a2a;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 5px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #ffd700;
+            width: 0%;
+        }
+
+        .level-info {
+            display: flex;
+            justify-content: space-between;
+            color: #999;
+            font-size: 14px;
+        }
+
+        .daily-reward {
+            background: #2a2a2a;
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            text-align: center;
+            color: #ffd700;
+            font-weight: bold;
+            border: 1px solid #3a3a3a;
+        }
+
+        .section {
+            background: #1a1a1a;
+            padding: 20px;
+            border-radius: 20px;
+            margin-bottom: 15px;
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .section-title {
+            color: white;
+            font-size: 20px;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #3a3a3a;
+            padding-bottom: 8px;
+        }
+
+        .item-card {
+            background: #2a2a2a;
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 10px;
+        }
+
+        .item-header {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .item-icon {
+            width: 50px;
+            height: 50px;
+            background: #3a3a3a;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+        }
+
+        .item-info {
+            flex: 1;
+        }
+
+        .item-name {
+            color: white;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .item-desc {
+            color: #999;
+            font-size: 12px;
+        }
+
+        .item-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .item-price {
+            color: #ffd700;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .buy-btn {
+            background: #ffd700;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .buy-btn:disabled {
+            opacity: 0.3;
+        }
+
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #ffd700;
+            color: #000;
+            padding: 15px 25px;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: 0.3s;
+            z-index: 1000;
+        }
+
+        .notification.show {
+            transform: translateX(-50%) translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- Шапка -->
+        <div class="header">
+            <h1>BRAINROT LEGENDS ⚡</h1>
+            <div class="balance">
+                <span id="balance">100</span>
+                <div class="coin-icon"></div>
+            </div>
+        </div>
+
+        <!-- Престиж -->
+        <div class="prestige-bar" onclick="doPrestige()">
+            ✨ ПРЕСТИЖ <span id="prestigeLevel">0</span> (x<span id="prestigeMult">1.0</span>)
+        </div>
+
+        <!-- Статистика -->
+        <div class="stats-grid">
+            <div class="stat-item">
+                Уровень<br>
+                <span class="stat-value" id="level">1</span>
+            </div>
+            <div class="stat-item">
+                Клики<br>
+                <span class="stat-value" id="totalClicks">0</span>
+            </div>
+            <div class="stat-item">
+                Доход/сек<br>
+                <span class="stat-value" id="income">0</span>
+            </div>
+            <div class="stat-item">
+                Стрик<br>
+                <span class="stat-value" id="streak">0</span>
+            </div>
+        </div>
+
+        <!-- Табы -->
+        <div class="tabs">
+            <div class="tab active" onclick="switchTab('clicker')">👆 КЛИК</div>
+            <div class="tab" onclick="switchTab('shop')">🏪 БИЗНЕС</div>
+            <div class="tab" onclick="switchTab('upgrades')">⚡ ПРОКАЧКА</div>
+        </div>
+
+        <!-- Кликер -->
+        <div id="clickerSection" class="clicker-section">
+            <div id="clickButton"></div>
+            <div class="click-info">
+                Сила клика: <span id="clickPower">1</span>
+            </div>
+        </div>
+
+        <!-- Прогресс -->
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="levelProgress"></div>
+            </div>
+            <div class="level-info">
+                <span id="currentLevel">Уровень 1</span>
+                <span id="nextLevelExp">До 2: 100</span>
+            </div>
+        </div>
+
+        <!-- Ежедневная награда -->
+        <div class="daily-reward" onclick="claimDaily()">
+            🔥 ЕЖЕДНЕВНАЯ НАГРАДА<br>
+            <span id="dailyInfo">Заберите +100 монет!</span>
+        </div>
+
+        <!-- Магазин -->
+        <div id="shopSection" class="section">
+            <div class="section-title">🏪 БИЗНЕС</div>
+            <div id="shopItems"></div>
+        </div>
+
+        <!-- Улучшения -->
+        <div id="upgradesSection" class="section">
+            <div class="section-title">⚡ УЛУЧШЕНИЯ</div>
+            <div id="upgradeItems"></div>
+        </div>
+    </div>
+
+    <div id="notification" class="notification"></div>
+
+    <script>
+        // Простые функции для Android
+        function showMessage(msg) {
+            const notif = document.getElementById('notification');
+            notif.textContent = msg;
+            notif.classList.add('show');
+            setTimeout(() => notif.classList.remove('show'), 2000);
+        }
+
+        // Данные игры
+        let game = {
+            balance: 100,
+            clickPower: 1,
+            totalClicks: 0,
+            level: 1,
+            exp: 0,
+            expToNext: 100,
+            prestige: 0,
+            prestigeMult: 1.0,
+            streak: 0,
+            lastDaily: null,
+            
+            businesses: [
+                { name: '🧠 Лавка', price: 50, income: 1, count: 0 },
+                { name: '🏭 Фабрика', price: 250, income: 5, count: 0 },
+                { name: '🏦 Банк', price: 1500, income: 30, count: 0 }
+            ],
+            
+            upgrades: [
+                { name: '👓 Очки', price: 100, bonus: 2, bought: false },
+                { name: '☕ Кофе', price: 600, bonus: 10, bought: false },
+                { name: '💊 Таблетки', price: 3000, bonus: 50, bought: false }
+            ]
+        };
+
+        // Обновление экрана
+        function updateDisplay() {
+            document.getElementById('balance').textContent = Math.floor(game.balance);
+            document.getElementById('clickPower').textContent = Math.floor(game.clickPower * game.prestigeMult);
+            document.getElementById('level').textContent = game.level;
+            document.getElementById('totalClicks').textContent = game.totalClicks;
+            
+            // Доход
+            let income = 0;
+            game.businesses.forEach(b => income += b.income * b.count);
+            income *= game.prestigeMult;
+            document.getElementById('income').textContent = income;
+            
+            document.getElementById('streak').textContent = game.streak;
+            document.getElementById('prestigeLevel').textContent = game.prestige;
+            document.getElementById('prestigeMult').textContent = game.prestigeMult.toFixed(1);
+            
+            // Прогресс
+            let progress = (game.exp / game.expToNext) * 100;
+            document.getElementById('levelProgress').style.width = progress + '%';
+            document.getElementById('currentLevel').textContent = `Уровень ${game.level}`;
+            document.getElementById('nextLevelExp').textContent = `До ${game.level + 1}: ${game.expToNext - game.exp}`;
+            
+            // Ежедневная
+            let today = new Date().toDateString();
+            if (game.lastDaily === today) {
+                document.getElementById('dailyInfo').textContent = `🔥 Стрик ${game.streak} дней!`;
+            } else {
+                document.getElementById('dailyInfo').textContent = `🎁 ЗАБРАТЬ! День ${game.streak + 1}`;
+            }
+            
+            // Магазин
+            let shopHtml = '';
+            game.businesses.forEach((b, i) => {
+                let price = Math.floor(b.price * Math.pow(1.2, b.count));
+                shopHtml += `
+                    <div class="item-card">
+                        <div class="item-header">
+                            <div class="item-icon">${b.name[0]}</div>
+                            <div class="item-info">
+                                <div class="item-name">${b.name}</div>
+                                <div class="item-desc">+${b.income}/сек • ${b.count} шт</div>
+                            </div>
+                        </div>
+                        <div class="item-footer">
+                            <div class="item-price">💰 ${price}</div>
+                            <button class="buy-btn" onclick="buyBusiness(${i})" ${game.balance < price ? 'disabled' : ''}>
+                                Купить
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            document.getElementById('shopItems').innerHTML = shopHtml;
+            
+            // Улучшения
+            let upgradeHtml = '';
+            game.upgrades.forEach((u, i) => {
+                upgradeHtml += `
+                    <div class="item-card">
+                        <div class="item-header">
+                            <div class="item-icon">${u.name[0]}</div>
+                            <div class="item-info">
+                                <div class="item-name">${u.name}</div>
+                                <div class="item-desc">+${u.bonus} к клику</div>
+                            </div>
+                        </div>
+                        <div class="item-footer">
+                            <div class="item-price">💰 ${u.price}</div>
+                            ${u.bought ? 
+                                '<span class="owned-badge">Куплено</span>' : 
+                                `<button class="buy-btn" onclick="buyUpgrade(${i})" ${game.balance < u.price ? 'disabled' : ''}>Купить</button>`
+                            }
+                        </div>
+                    </div>
+                `;
+            });
+            document.getElementById('upgradeItems').innerHTML = upgradeHtml;
+        }
+
+        // Опыт
+        function addExp(amount) {
+            game.exp += amount * game.prestigeMult;
+            while (game.exp >= game.expToNext) {
+                game.level++;
+                game.exp -= game.expToNext;
+                game.expToNext = Math.floor(game.expToNext * 1.5);
+                showMessage(`🎉 УРОВЕНЬ ${game.level}!`);
+            }
+        }
+
+        // Клик
+        document.getElementById('clickButton').onclick = function(e) {
+            let gain = game.clickPower * game.prestigeMult;
+            game.balance += gain;
+            game.totalClicks += gain;
+            addExp(gain);
+            updateDisplay();
+            
+            // Монетка
+            let coin = document.createElement('div');
+            coin.className = 'coin-icon';
+            coin.style.position = 'absolute';
+            coin.style.width = '30px';
+            coin.style.height = '30px';
+            coin.style.left = (e.clientX - 15) + 'px';
+            coin.style.top = (e.clientY - 15) + 'px';
+            coin.style.animation = 'floatUp 1s forwards';
+            document.body.appendChild(coin);
+            setTimeout(() => coin.remove(), 1000);
+        };
+
+        // Покупка бизнеса
+        window.buyBusiness = function(index) {
+            let biz = game.businesses[index];
+            let price = Math.floor(biz.price * Math.pow(1.2, biz.count));
+            
+            if (game.balance >= price) {
+                game.balance -= price;
+                biz.count++;
+                showMessage(`✅ Куплен ${biz.name}`);
+                updateDisplay();
+            }
+        };
+
+        // Покупка улучшения
+        window.buyUpgrade = function(index) {
+            let up = game.upgrades[index];
+            
+            if (game.balance >= up.price && !up.bought) {
+                game.balance -= up.price;
+                game.clickPower += up.bonus;
+                up.bought = true;
+                showMessage(`✅ ${up.name} +${up.bonus}`);
+                updateDisplay();
+            }
+        };
+
+        // Престиж
+        window.doPrestige = function() {
+            if (game.level >= 20) {
+                game.prestige++;
+                game.prestigeMult *= 1.5;
+                game.level = 1;
+                game.exp = 0;
+                game.expToNext = 100;
+                game.businesses.forEach(b => b.count = 0);
+                game.upgrades.forEach(u => u.bought = false);
+                game.balance += 10000 * game.prestige;
+                showMessage(`✨ ПРЕСТИЖ ${game.prestige}!`);
+                updateDisplay();
+            } else {
+                showMessage('Нужен 20 уровень!');
+            }
+        };
+
+        // Ежедневная
+        window.claimDaily = function() {
+            let today = new Date().toDateString();
+            if (game.lastDaily !== today) {
+                if (game.lastDaily === new Date(Date.now() - 86400000).toDateString()) {
+                    game.streak++;
+                } else {
+                    game.streak = 1;
+                }
+                let reward = 100 * Math.pow(2, game.streak - 1);
+                game.balance += reward;
+                game.lastDaily = today;
+                showMessage(`🔥 ДЕНЬ ${game.streak}! +${reward}`);
+                updateDisplay();
+            } else {
+                showMessage('Уже получали сегодня!');
+            }
+        };
+
+        // Переключение табов
+        window.switchTab = function(tab) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.section, .clicker-section').forEach(s => s.style.display = 'none');
+            
+            if (tab === 'clicker') {
+                document.querySelectorAll('.tab')[0].classList.add('active');
+                document.getElementById('clickerSection').style.display = 'block';
+            } else if (tab === 'shop') {
+                document.querySelectorAll('.tab')[1].classList.add('active');
+                document.getElementById('shopSection').style.display = 'block';
+            } else {
+                document.querySelectorAll('.tab')[2].classList.add('active');
+                document.getElementById('upgradesSection').style.display = 'block';
+            }
+        };
+
+        // Пассивный доход
+        setInterval(() => {
+            let income = 0;
+            game.businesses.forEach(b => income += b.income * b.count);
+            income *= game.prestigeMult;
+            
+            if (income > 0) {
+                game.balance += income;
+                addExp(income);
+                updateDisplay();
+            }
+        }, 1000);
+
+        // Сохранение
+        const saved = localStorage.getItem('brainrotSave');
+        if (saved) {
+            try {
+                let loaded = JSON.parse
